@@ -1,0 +1,7 @@
+api:
+  url: ${CATALOG_API_URL}
+  api-key: ${CATALOG_API_KEY}
+
+
+server:
+  port: 80
