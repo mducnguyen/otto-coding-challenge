@@ -1,14 +1,12 @@
 package de.duc.nguyen.occ.catalogfilter.models.sort;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
-@Data
 @Builder
+@Getter
 public class SortProperties {
     private List<SortProperty> sortProperties;
 }

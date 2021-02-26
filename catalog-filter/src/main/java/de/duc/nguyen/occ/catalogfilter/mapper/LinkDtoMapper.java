@@ -2,11 +2,11 @@ package de.duc.nguyen.occ.catalogfilter.mapper;
 
 import de.duc.nguyen.occ.catalogfilter.models.AbstractNode;
 import de.duc.nguyen.occ.catalogfilter.models.Link;
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
 
 public class LinkDtoMapper {
-    public static LinkDto toLinkDto(Link link) {
-        return LinkDto.builder()
+    public static LinkDTO toLinkDto(Link link) {
+        return LinkDTO.builder()
                 .url(link.getUrl())
                 .label(getLabelOfLink(link))
                 .build();

@@ -1,6 +1,6 @@
 package de.duc.nguyen.occ.catalogfilter;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

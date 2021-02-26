@@ -1,13 +1,11 @@
 package de.duc.nguyen.occ.catalogfilter.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Link extends AbstractNode {
     private String url;

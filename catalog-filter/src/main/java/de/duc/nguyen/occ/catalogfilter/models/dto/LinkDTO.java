@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LinkDto {
+public class LinkDTO {
     private String label;
     private String url;
 }

@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  catalog-service:
+    build: .
+    env_file:
+      - dev.env
+    ports:
+      - "80:80"

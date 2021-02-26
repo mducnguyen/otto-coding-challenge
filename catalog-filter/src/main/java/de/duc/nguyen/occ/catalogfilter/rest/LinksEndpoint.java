@@ -3,7 +3,7 @@ package de.duc.nguyen.occ.catalogfilter.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.duc.nguyen.occ.catalogfilter.mapper.LinkDtoMapper;
 import de.duc.nguyen.occ.catalogfilter.models.Link;
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
 import de.duc.nguyen.occ.catalogfilter.service.CatalogService;
 import de.duc.nguyen.occ.catalogfilter.service.sort.SortService;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class LinksEndpoint {
     private final SortService sortService;
 
     @GetMapping
-    public ResponseEntity<List<LinkDto>> getLinks(@RequestParam(name = "parent", required = false) String parent,
+    public ResponseEntity<List<LinkDTO>> getLinks(@RequestParam(name = "parent", required = false) String parent,
                                                   @RequestParam(name = "sort", required = false, defaultValue = "label:acs") String sort) throws JsonProcessingException {
 
         List<Link> links = catalogService.getLinks();
@@ -37,11 +37,15 @@ public class LinksEndpoint {
 
         }
 
-        List<LinkDto> linkDTOs = links.stream().map(LinkDtoMapper::toLinkDto).collect(Collectors.toList());
+        if (links.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
 
-        sortService.sort(linkDTOs, sort);
+        List<LinkDTO> linkDTOS = links.stream().map(LinkDtoMapper::toLinkDto).collect(Collectors.toList());
 
-        return ResponseEntity.ok(linkDTOs);
+        sortService.sort(linkDTOS, sort);
+
+        return ResponseEntity.ok(linkDTOS);
     }
 
 }

@@ -1,6 +1,6 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,13 +14,13 @@ public class SortServiceImpl implements SortService {
     private final SortStrategyFactory sortStrategyFactory;
 
     @Override
-    public void sort(List<LinkDto> linkDTOs, String sortOption) {
+    public void sort(List<LinkDTO> linkDTOS, String sortOption) {
         SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
-        sort(linkDTOs, sortProperties);
+        sort(linkDTOS, sortProperties);
     }
 
-    private void sort(List<LinkDto> linkDTOs, SortProperties sortProperties) {
-        linkDTOs.sort((link1, link2) -> sortStrategyFactory.getSortStrategy(sortProperties, link1, link2).result());
+    private void sort(List<LinkDTO> linkDTOS, SortProperties sortProperties) {
+        linkDTOS.sort((link1, link2) -> sortStrategyFactory.getSortStrategy(sortProperties, link1, link2).result());
     }
 
 }

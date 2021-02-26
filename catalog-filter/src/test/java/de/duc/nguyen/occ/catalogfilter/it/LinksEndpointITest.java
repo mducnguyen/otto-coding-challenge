@@ -3,17 +3,19 @@ package de.duc.nguyen.occ.catalogfilter.it;
 import de.duc.nguyen.occ.catalogfilter.CatalogFilterApplication;
 import de.duc.nguyen.occ.catalogfilter.api.CatalogApi;
 import de.duc.nguyen.occ.catalogfilter.utils.TestUtils;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Map;
 
 import static org.hamcrest.Matchers.isA;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,13 +39,10 @@ public class LinksEndpointITest {
     @Autowired
     private CatalogApi catalogApi;
 
-    @Before
-    public void setUp() {
-        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
-    }
-
     @Test
     public void givenTheApiWorkAsExpected_whenGetLinks_thenReturnAnArrayOfLinks() throws Exception {
+
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
 
         mockMvc.perform(get("/links")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -56,6 +55,8 @@ public class LinksEndpointITest {
     @Test
     public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterParent_thenReturnAnArrayOfLinks() throws Exception {
 
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+
         mockMvc.perform(get("/links?parent=Alter")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -64,12 +65,68 @@ public class LinksEndpointITest {
     }
 
     @Test
-    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSort_thenReturnAnArrayOfLinks() throws Exception {
+    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSortWithFullOption_thenReturnAnArrayOfLinks() throws Exception {
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
 
         mockMvc.perform(get("/links?parent=Alter&sort=label:asc,url:desc")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
+    }
+
+    @Test
+    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSortWithOneSortOption_thenReturnAnArrayOfLinks() throws Exception {
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+
+        mockMvc.perform(get("/links?parent=Alter&sort=label:desc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
+    }
+
+    @Test
+    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSortWithMissingDirection_thenReturnAnArrayOfLinks() throws Exception {
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+
+        mockMvc.perform(get("/links?parent=Alter&sort=label,url")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
+    }
+
+    @Test
+    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSortWithInvalidField_thenReturnAnArrayOfLinks() throws Exception {
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+
+        mockMvc.perform(get("/links?parent=Alter&sort=abc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
+    }
+
+    @Test
+    public void givenTheApiWorkNotAsExpected_whenGetLinksWithRequestParameterSort_thenReturnFailed_DependencyErrorMessage() throws Exception {
+
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestInvalidCatalogJson());
+
+        mockMvc.perform(get("/links?parent=Alter&sort=label:decs,url:desc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(HttpStatus.FAILED_DEPENDENCY.value()))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", isA(Map.class)));
+    }
+
+    @Test
+    public void givenTheParentCannotBefound_whenGetLinksWithRequestParameterSort_thenReturnNo_ContentMessage() throws Exception {
+
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+
+        mockMvc.perform(get("/links?parent=abc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(HttpStatus.NO_CONTENT.value()));
     }
 }

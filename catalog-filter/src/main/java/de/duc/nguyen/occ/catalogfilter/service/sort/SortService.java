@@ -1,9 +1,9 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
 
 import java.util.List;
 
 public interface SortService {
-    void sort(List<LinkDto> linkDTOs, String sortOption);
+    void sort(List<LinkDTO> linkDTOS, String sortOption);
 }
