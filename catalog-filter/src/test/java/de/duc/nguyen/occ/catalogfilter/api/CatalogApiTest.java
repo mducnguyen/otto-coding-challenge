@@ -1,6 +1,8 @@
 package de.duc.nguyen.occ.catalogfilter.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import de.duc.nguyen.occ.catalogfilter.config.CatalogApiParam;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Catalog;
 import de.duc.nguyen.occ.catalogfilter.utils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -37,14 +39,13 @@ public class CatalogApiTest {
     }
 
     @Test
-    public void givenTheApiWorkAsExpected_whenGetCatalog_thenReturnCatalogAsJsonString() {
+    public void givenTheApiWorkAsExpected_whenGetCatalog_thenReturnCatalogAsJsonString() throws JsonProcessingException {
         when(catalogApiParam.getApiKey()).thenReturn("apiKey");
         when(catalogApiParam.getUrl()).thenReturn("apiUrl");
         when(restTemplate.exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(Class.class)))
                 .thenReturn(ResponseEntity.of(Optional.of(TestUtils.getTestCatalogJson())));
 
-        String catalog = catalogApi.getCatalog();
-        assertThat(catalog.isEmpty(), is(false));
-        assertThat(TestUtils.isJsonString(catalog), is(true));
+        Catalog catalog = catalogApi.getCatalog();
+        assertThat(catalog, notNullValue());
     }
 }

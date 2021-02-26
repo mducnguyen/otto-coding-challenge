@@ -1,5 +1,8 @@
 package de.duc.nguyen.occ.catalogfilter.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Catalog;
+
 public interface CatalogApi {
-    String getCatalog();
+    Catalog getCatalog() throws JsonProcessingException;
 }

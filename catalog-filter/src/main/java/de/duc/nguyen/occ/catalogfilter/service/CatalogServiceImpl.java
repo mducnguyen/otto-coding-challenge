@@ -1,8 +1,6 @@
 package de.duc.nguyen.occ.catalogfilter.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.duc.nguyen.occ.catalogfilter.api.CatalogApi;
 import de.duc.nguyen.occ.catalogfilter.models.domain.AbstractNode;
 import de.duc.nguyen.occ.catalogfilter.models.domain.Catalog;
@@ -21,13 +19,13 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<Link> getLinks() throws JsonProcessingException {
-        Catalog catalog = getCatalog();
+        Catalog catalog = catalogApi.getCatalog();
         return getLinksOf(catalog);
     }
 
     @Override
     public List<Link> getLinks(String parent) throws JsonProcessingException {
-        Catalog catalog = getCatalog();
+        Catalog catalog = catalogApi.getCatalog();
 
         List<AbstractNode> nodes = extractNodes(catalog, parent);
 
@@ -50,17 +48,7 @@ public class CatalogServiceImpl implements CatalogService {
                 .collect(Collectors.toList());
     }
 
-    private Catalog getCatalog() throws JsonProcessingException {
 
-        String catalogJsonString = this.catalogApi.getCatalog();
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.readTree(catalogJsonString);
-        Catalog catalog = mapper.treeToValue(jsonNode, Catalog.class);
-        catalog.initParentForNodes();
-
-        return catalog;
-    }
 
     private List<Link> getLinksOf(Catalog catalog) {
         return getLinkOf(catalog.getNavigationEntries());

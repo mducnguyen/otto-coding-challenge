@@ -1,7 +1,9 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
+import com.google.common.collect.ComparisonChain;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +21,22 @@ public class SortServiceImpl implements SortService {
         sort(linkDTOS, sortProperties);
     }
 
+
     private void sort(List<LinkDto> linkDTOS, SortProperties sortProperties) {
-        linkDTOS.sort((link1, link2) -> sortStrategyFactory.getSortStrategy(sortProperties, link1, link2).result());
+        List<SortStrategy> sortStrategies = sortStrategyFactory.getSortStrategies(sortProperties);
+
+
+        linkDTOS.sort((link1, link2) -> {
+
+            ComparisonChain comparisonChain = ComparisonChain.start();
+
+            for (SortStrategy sortStrategy : sortStrategies) {
+                comparisonChain = sortStrategy.chain(comparisonChain, link1, link2);
+            }
+
+            return comparisonChain.result();
+
+        });
     }
 
 }

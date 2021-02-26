@@ -68,6 +68,18 @@ public class SortPropertiesParserTest {
     }
 
     @Test
+    public void givenInvalidOption_whenParseSortProperties_thenReturn0SortProprties() {
+        // given
+        String sortOption = ":";
+
+        // when
+        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+
+        // then
+        assertEquals(sortProperties.getSortProperties().size(), 1);
+    }
+
+    @Test
     public void givenSingleInvalidOption_whenParseSortProperties_thenReturnSortPropertiesWithOneProperty() {
         // given
         String sortOption = "name";

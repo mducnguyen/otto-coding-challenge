@@ -1,69 +1,44 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
-import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Ordering;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortDirection;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperty;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortableField;
-import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
+import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.LabelStrategy;
+import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
+import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.UrlStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class SortStrategyFactoryImpl implements SortStrategyFactory {
 
-    public ComparisonChain getSortStrategy(SortProperties sortProperties, LinkDto link1, LinkDto link2) {
-        List<SortProperty> properties = sortProperties.getSortProperties();
-
-        ComparisonChain comparisonChain = ComparisonChain.start();
-
-        for (SortProperty property : properties) {
-            comparisonChain = getComparisonChain(comparisonChain, property, link1, link2);
-        }
-
-        return comparisonChain;
+    @Override
+    public List<SortStrategy> getSortStrategies(SortProperties sortProperties) {
+        return sortProperties.getSortProperties().stream()
+                .map(this::getSortStrategy)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
 
-    private ComparisonChain getComparisonChain(ComparisonChain comparisonChain, SortProperty sortProperty, LinkDto link1, LinkDto link2) {
-
+    public SortStrategy getSortStrategy(SortProperty sortProperty) {
         SortableField sortableField = sortProperty.getSortableField();
         SortDirection sortDirection = sortProperty.getSortDirection();
 
         if (sortableField != null && sortDirection != null) {
             switch (sortableField) {
-                case URL: {
-                    switch (sortDirection) {
-                        case ASC:
-                        case DEFAULT:
-                            comparisonChain = comparisonChain.compare(link1.getUrl(), link2.getUrl(), Ordering.natural().nullsLast());
-                            break;
-                        case DESC:
-                            comparisonChain = comparisonChain.compare(link1.getUrl(), link2.getUrl(), Ordering.from((o1, o2) -> o2.compareTo(o1)));
-                            break;
-                    }
-                }
-                break;
-                case LABEL: {
-                    switch (sortDirection) {
-                        case ASC:
-                        case DEFAULT:
-                            comparisonChain = comparisonChain.compare(link1.getLabel(), link2.getLabel(), Ordering.natural().nullsLast());
-                            break;
-                        case DESC:
-                            comparisonChain = comparisonChain.compare(link1.getLabel(), link2.getLabel(), Ordering.from((o1, o2) -> o2.compareTo(o1)));
-                            break;
-                    }
-                }
-                break;
+                case URL:
+                    return new UrlStrategy(sortDirection);
                 case DEFAULT:
-                    comparisonChain = comparisonChain.compare(link1.getLabel(), link2.getLabel(), Ordering.natural().nullsLast());
-                    break;
+                case LABEL:
+                    return new LabelStrategy(sortDirection);
             }
         }
 
-        return comparisonChain;
+        return null;
     }
 }

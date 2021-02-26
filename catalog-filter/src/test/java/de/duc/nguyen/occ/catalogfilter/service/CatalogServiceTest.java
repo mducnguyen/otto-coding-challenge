@@ -32,7 +32,7 @@ public class CatalogServiceTest {
 
     @Test
     public void givenTheApiWorkAsExpected_whenGetLinks_thenReturnAListOfLinks() throws JsonProcessingException {
-        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalog());
 
         List<Link> links = catalogService.getLinks();
 
@@ -44,7 +44,7 @@ public class CatalogServiceTest {
     @Test
     public void givenTheApiWorkAsExpected_whenGetLinksWithParentFilter_thenReturnAListOfLinks() throws JsonProcessingException {
 
-        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalog());
         String parent = "Baby & Kleinkind";
 
         List<Link> links = catalogService.getLinks(parent);

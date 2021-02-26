@@ -1,8 +1,16 @@
 package de.duc.nguyen.occ.catalogfilter.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Catalog;
+import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class TestUtils {
     public static String getTestCatalogJson() {
@@ -89,6 +97,15 @@ public class TestUtils {
                 "}";
     }
 
+    public static Catalog getTestCatalog() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(getTestCatalogJson());
+        Catalog catalog = mapper.treeToValue(jsonNode, Catalog.class);
+        catalog.initParentForNodes();
+
+        return catalog;
+    }
+
     public static boolean isJsonString(String jsonStr) {
         try {
             new JSONObject(jsonStr);
@@ -101,4 +118,51 @@ public class TestUtils {
         }
         return true;
     }
+
+    public static boolean istSortedLabelDesc(List<LinkDto> links) {
+
+        LinkDto lastLink;
+        LinkDto currentLink = null;
+
+        Iterator<LinkDto> iterator = links.iterator();
+
+        if (iterator.hasNext()) {
+            currentLink = iterator.next();
+        }
+
+        while (iterator.hasNext()) {
+            lastLink = currentLink;
+            currentLink = iterator.next();
+
+            if (lastLink.getLabel().compareTo(currentLink.getLabel()) < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean istSortedUrlAsc(List<LinkDto> links) {
+
+        LinkDto lastLink;
+        LinkDto currentLink = null;
+
+        Iterator<LinkDto> iterator = links.iterator();
+
+        if (iterator.hasNext()) {
+            currentLink = iterator.next();
+        }
+
+        while (iterator.hasNext()) {
+            lastLink = currentLink;
+            currentLink = iterator.next();
+
+            if (lastLink.getUrl().compareTo(currentLink.getUrl()) >= 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
