@@ -27,13 +27,13 @@
 
 #### 	
 
-![Modules](/Users/ducnguyen/Downloads/Modules.png)
+![Modules](./Modules.png)
 
 Figure 1. Service Architechture
 
 
 
-![CatalogModel](/Users/ducnguyen/Downloads/CatalogModel.png)
+![CatalogModel](./CatalogModel.png)
 
 Figure 2. Catalog Datamodel
 
