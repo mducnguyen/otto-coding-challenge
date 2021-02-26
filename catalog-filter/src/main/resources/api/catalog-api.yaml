@@ -1,0 +1,60 @@
+#
+# USE https://editor.swagger.io
+#
+swagger: '2.0'
+info:
+  description: Catalog Filter API
+  version: 1.0.0 #API version
+  title: Catalog Filter API Swagger UI
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  '/links':
+    get:
+      summary: Get all Llinks in the Catalog
+      description: Returns a list of links
+      operationId: getLinks #Method name
+      parameters:
+        - name: parent
+          in: query
+          description: Filter Parent
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort options (sprecified in OpenStack)
+          required: false
+          type: string
+      produces:
+        - application/json #Response content type
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Link'
+              example: "hydraulic_servicing"
+        '204':
+          description: no result found
+        '424':
+          description: Failed Dependency
+
+
+definitions: # Object definition
+  Link:
+    type: object
+    properties:
+      label:
+        type: string
+        description: label of the link
+        example: 'Camping & Outdoor'
+      url:
+        type: string
+        description: url of the link
+        example: 'http://www.mytoys.de/sport-garten/camping-outdoor/'
+    required:
+      - label
+      - url
+
