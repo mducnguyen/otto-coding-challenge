@@ -1,7 +1,7 @@
 package de.duc.nguyen.occ.catalogfilter.mapper;
 
-import de.duc.nguyen.occ.catalogfilter.models.AbstractNode;
-import de.duc.nguyen.occ.catalogfilter.models.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.AbstractNode;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 
 public class LinkDtoMapper {

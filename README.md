@@ -1,3 +1,7 @@
+
+
+
+
 # Catalog Filter Service
 
 
@@ -20,4 +24,16 @@
 
 
 ### About The Development of this Service 
+
+#### 	
+
+![Modules](/Users/ducnguyen/Downloads/Modules.png)
+
+Figure 1. Service Architechture
+
+
+
+![CatalogModel](/Users/ducnguyen/Downloads/CatalogModel.png)
+
+Figure 2. Catalog Datamodel
 

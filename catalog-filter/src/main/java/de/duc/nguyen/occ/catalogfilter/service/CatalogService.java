@@ -2,7 +2,7 @@ package de.duc.nguyen.occ.catalogfilter.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import de.duc.nguyen.occ.catalogfilter.models.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
 
 import java.util.List;
 

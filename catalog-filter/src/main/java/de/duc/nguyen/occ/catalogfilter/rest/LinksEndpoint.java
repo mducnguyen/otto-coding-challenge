@@ -1,7 +1,7 @@
 package de.duc.nguyen.occ.catalogfilter.rest;
 
 import de.duc.nguyen.occ.catalogfilter.mapper.LinkDtoMapper;
-import de.duc.nguyen.occ.catalogfilter.models.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
 import de.duc.nguyen.occ.catalogfilter.rest.api.LinksApi;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import de.duc.nguyen.occ.catalogfilter.service.CatalogService;

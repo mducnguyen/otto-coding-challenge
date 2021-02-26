@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.duc.nguyen.occ.catalogfilter.api.CatalogApi;
-import de.duc.nguyen.occ.catalogfilter.models.AbstractNode;
-import de.duc.nguyen.occ.catalogfilter.models.Catalog;
-import de.duc.nguyen.occ.catalogfilter.models.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.AbstractNode;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Catalog;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

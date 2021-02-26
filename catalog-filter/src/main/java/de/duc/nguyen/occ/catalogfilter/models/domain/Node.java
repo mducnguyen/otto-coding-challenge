@@ -1,4 +1,4 @@
-package de.duc.nguyen.occ.catalogfilter.models;
+package de.duc.nguyen.occ.catalogfilter.models.domain;
 
 public class Node extends AbstractNode {
     @Override

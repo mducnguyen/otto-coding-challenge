@@ -1,4 +1,4 @@
-package de.duc.nguyen.occ.catalogfilter.models;
+package de.duc.nguyen.occ.catalogfilter.models.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -17,8 +17,8 @@ import java.util.stream.Stream;
         property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Node.class, name = "node"),
-        @JsonSubTypes.Type(value = Section.class, name = "section"),
-        @JsonSubTypes.Type(value = ExternalLink.class, name = "external-link"),
+        @JsonSubTypes.Type(value = Node.class, name = "section"),
+        @JsonSubTypes.Type(value = Link.class, name = "external-link"),
         @JsonSubTypes.Type(value = Link.class, name = "link")
 
 })

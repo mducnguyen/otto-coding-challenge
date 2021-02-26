@@ -1,4 +1,4 @@
-package de.duc.nguyen.occ.catalogfilter.models;
+package de.duc.nguyen.occ.catalogfilter.models.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,7 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 public class Catalog implements Serializable {
-    private List<AbstractNode> navigationEntries;
+
+    private List<AbstractNode> navigationEntries = new ArrayList<>();
 
     public void initParentForNodes() {
         navigationEntries.forEach(AbstractNode::initParentForChildren);

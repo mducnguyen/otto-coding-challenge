@@ -1,5 +1,7 @@
 package de.duc.nguyen.occ.catalogfilter.models;
 
+import de.duc.nguyen.occ.catalogfilter.models.domain.AbstractNode;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Node;
 import org.junit.Before;
 import org.junit.Test;
 
