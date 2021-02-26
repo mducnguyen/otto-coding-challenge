@@ -1,10 +1,12 @@
 package de.duc.nguyen.occ.catalogfilter.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,12 +16,7 @@ public class Catalog implements Serializable {
     private List<AbstractNode> navigationEntries;
 
     public void setParentForNodes() {
-        navigationEntries.forEach(AbstractNode::setParentForChildren);
+        navigationEntries.forEach(AbstractNode::initParentForChildren);
     }
 
-    public List<Link> getLinks() {
-        return navigationEntries.stream()
-                .flatMap(section -> section.getLeaves().stream().map(leaf -> (Link) leaf))
-                .collect(Collectors.toList());
-    }
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -30,24 +31,51 @@ public abstract class AbstractNode implements Serializable {
     private AbstractNode parent;
     private List<AbstractNode> children;
 
-    public void setParentForChildren() {
+    public void initParentForChildren() {
         if (children != null)
             this.children.forEach(children -> {
                 children.setParent(this);
-                children.setParentForChildren();
+                children.initParentForChildren();
             });
     }
 
-    abstract public boolean isLeaf();
+    public void setParentForChildren(AbstractNode parent) {
+        if (children != null)
+            this.children.forEach(children -> children.setParent(parent));
+    }
 
-    public List<AbstractNode> getLeaves() {
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    public boolean hasChildren() {
+        return children != null && !children.isEmpty();
+    }
+
+    public List<AbstractNode> getAllLeaves() {
 
         if (this.isLeaf()) {
             return Collections.singletonList(this);
         }
 
         return children.stream()
-                .flatMap(child -> child.getLeaves().stream())
+                .flatMap(child -> child.getAllLeaves().stream())
                 .collect(Collectors.toList());
     }
+
+    public List<AbstractNode> findFirstChildrenToHaveLabel(String label) {
+        if (hasChildren()) {
+            return children.stream().flatMap(child -> {
+                if (child.getLabel().equalsIgnoreCase(label)) {
+                    return Stream.of(child);
+                } else {
+                    return child.findFirstChildrenToHaveLabel(label).stream();
+                }
+            }).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    abstract public boolean isLeaf();
 }

@@ -40,4 +40,16 @@ public class CatalogServiceTest {
         assertThat(links, hasSize(5));
     }
 
+
+    @Test
+    public void givenTheApiWorkAsExpected_whenGetLinksWithParentFilter_thenReturnAListOfLinks() throws JsonProcessingException {
+
+        when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalogJson());
+        String parent = "Baby & Kleinkind";
+
+        List<Link> links = catalogService.getLinks(parent);
+
+        assertThat(links.isEmpty(), is(false));
+        assertThat(links, hasSize(3));
+    }
 }
