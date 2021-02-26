@@ -2,11 +2,11 @@ package de.duc.nguyen.occ.catalogfilter.service.sort;
 
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortDirection;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperty;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortableField;
+import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class SortStrategyFactoryImpl implements SortStrategyFactory {
 
-    public ComparisonChain getSortStrategy(SortProperties sortProperties, LinkDTO link1, LinkDTO link2) {
+    public ComparisonChain getSortStrategy(SortProperties sortProperties, LinkDto link1, LinkDto link2) {
         List<SortProperty> properties = sortProperties.getSortProperties();
 
         ComparisonChain comparisonChain = ComparisonChain.start();
@@ -27,7 +27,7 @@ public class SortStrategyFactoryImpl implements SortStrategyFactory {
     }
 
 
-    private ComparisonChain getComparisonChain(ComparisonChain comparisonChain, SortProperty sortProperty, LinkDTO link1, LinkDTO link2) {
+    private ComparisonChain getComparisonChain(ComparisonChain comparisonChain, SortProperty sortProperty, LinkDto link1, LinkDto link2) {
 
         SortableField sortableField = sortProperty.getSortableField();
         SortDirection sortDirection = sortProperty.getSortDirection();

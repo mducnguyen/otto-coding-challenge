@@ -78,6 +78,28 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -90,8 +112,9 @@
                 <configuration>
                     <excludes> <!--exclude param and config files-->
                         <exclude>**/*Param.class</exclude>
-                        <exclude>**/*DTO.class</exclude>
+                        <exclude>**/*Dto.class</exclude>
                         <exclude>**/*Application.class</exclude>
+                        <exclude>**/*Configuration.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -123,6 +146,40 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.3.1</version>
+                <executions>
+                    <execution>
+                        <id>catalog-filter-api-stubs</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api/catalog-api.yaml</inputSpec>
+                            <language>spring</language>
+                            <apiPackage>de.duc.nguyen.occ.catalogfilter.rest.api</apiPackage>
+                            <modelPackage>de.duc.nguyen.occ.catalogfilter.rest.model</modelPackage>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <basePackage>de.duc.nguyen.occ.catalogfilter.rest</basePackage>
+                                <configPackage>de.duc.nguyen.occ.catalogfilter.rest</configPackage>
+                                <swaggerDocketConfig>false</swaggerDocketConfig>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                                <dateLibrary>java11</dateLibrary>
+                                <bigDecimalAsString>true</bigDecimalAsString>
+                                <useBeanValidation>true</useBeanValidation>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

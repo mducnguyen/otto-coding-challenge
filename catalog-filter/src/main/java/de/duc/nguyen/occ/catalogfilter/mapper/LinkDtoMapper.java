@@ -2,14 +2,14 @@ package de.duc.nguyen.occ.catalogfilter.mapper;
 
 import de.duc.nguyen.occ.catalogfilter.models.AbstractNode;
 import de.duc.nguyen.occ.catalogfilter.models.Link;
-import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDTO;
+import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 
 public class LinkDtoMapper {
-    public static LinkDTO toLinkDto(Link link) {
-        return LinkDTO.builder()
-                .url(link.getUrl())
-                .label(getLabelOfLink(link))
-                .build();
+    public static LinkDto toLinkDto(Link link) {
+        LinkDto linkDto = new LinkDto();
+        linkDto.setLabel(getLabelOfLink(link));
+        linkDto.setUrl(link.getUrl());
+        return linkDto;
     }
 
     private static String getLabelOfLink(Link link) {
