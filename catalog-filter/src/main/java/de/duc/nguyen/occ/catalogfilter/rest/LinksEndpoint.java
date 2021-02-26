@@ -5,6 +5,7 @@ import de.duc.nguyen.occ.catalogfilter.mapper.LinkDtoMapper;
 import de.duc.nguyen.occ.catalogfilter.models.Link;
 import de.duc.nguyen.occ.catalogfilter.models.dto.LinkDto;
 import de.duc.nguyen.occ.catalogfilter.service.CatalogService;
+import de.duc.nguyen.occ.catalogfilter.service.sort.SortService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,20 +23,25 @@ public class LinksEndpoint {
 
     private final CatalogService catalogService;
 
+    private final SortService sortService;
+
     @GetMapping
-    public ResponseEntity<List<LinkDto>> getLinks(@RequestParam(required = false) String parent) throws JsonProcessingException {
+    public ResponseEntity<List<LinkDto>> getLinks(@RequestParam(name = "parent", required = false) String parent,
+                                                  @RequestParam(name = "sort", required = false, defaultValue = "label:acs") String sort) throws JsonProcessingException {
 
         List<Link> links = catalogService.getLinks();
 
         if (parent != null && !parent.isEmpty()) {
+
             links = catalogService.getLinks(parent);
+
         }
 
-        return ResponseEntity.ok(links
-                .stream()
-                .map(LinkDtoMapper::toLinkDto)
-                .collect(Collectors.toList())
-        );
+        List<LinkDto> linkDTOs = links.stream().map(LinkDtoMapper::toLinkDto).collect(Collectors.toList());
+
+        sortService.sort(linkDTOs, sort);
+
+        return ResponseEntity.ok(linkDTOs);
     }
 
 }

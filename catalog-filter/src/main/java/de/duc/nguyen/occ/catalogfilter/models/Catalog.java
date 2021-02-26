@@ -15,7 +15,7 @@ import java.util.List;
 public class Catalog implements Serializable {
     private List<AbstractNode> navigationEntries;
 
-    public void setParentForNodes() {
+    public void initParentForNodes() {
         navigationEntries.forEach(AbstractNode::initParentForChildren);
     }
 

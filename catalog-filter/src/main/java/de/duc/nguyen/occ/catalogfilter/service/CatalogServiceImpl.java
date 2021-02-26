@@ -57,7 +57,7 @@ public class CatalogServiceImpl implements CatalogService {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(catalogJsonString);
         Catalog catalog = mapper.treeToValue(jsonNode, Catalog.class);
-        catalog.setParentForNodes();
+        catalog.initParentForNodes();
 
         return catalog;
     }

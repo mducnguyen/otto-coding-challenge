@@ -62,4 +62,14 @@ public class LinksEndpointITest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
     }
+
+    @Test
+    public void givenTheApiWorkAsExpected_whenGetLinksWithRequestParameterSort_thenReturnAnArrayOfLinks() throws Exception {
+
+        mockMvc.perform(get("/links?parent=Alter&sort=label:asc,url:desc")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", isA(net.minidev.json.JSONArray.class)));
+    }
 }
