@@ -49,7 +49,7 @@ Figure 1. Service Architechture
 As I observed the structure of the JsonObjects comming from the **remote-catalog-api**. it was critical to have a dynamic data model for parsing these Objects. Figure 2. show the UML class diagram of the catalog. There are some important bullet points, which considered to be important to the model:
 
 - In order to be able to travers bidirectional within the model, every node has to be aware of their parent node and also their children. 
-- Each nodes has to be able to decide whether it is the last of its kind (a leaf)
+- Each nodes has to be able to decide whether it is the last of its kind (a leaf).
 
 
 
@@ -63,10 +63,20 @@ Figure 2. Catalog Datamodel
 
 ##### 3. The sorting Strategy
 
+For the sorting functionality I decided to use Strategy Pattern and Abstract Factory Pattern to increase the flexiblity and the ability for future extension. Each Sorting Decision ist capsuled into SortStrategy object, which provides the appropriate comparing function for its own sistuation.
 
 
-|          |   LABEL    |    URL     |
-| :------- | :--------: | :--------: |
-| **ACS**  | label:asc  |  url:asc   |
-| **DESC** | label:desc | label:desc |
+
+![SortingModule](./SortingModule.png)
+
+
+
+##### 4. The Development Lifecycle
+
+- The Catalog-Filter Service was developed in multiple closed iterations. After each iteration a runable service ist created with the evolving sets of demanded features with UnitTests and integration Tests. 
+- TDD were applied in every iteration. 
+- Test coverage was constantly check with both IDE testing and jacoco report, which can be found and reviewed as HTML file in the build folder.  (>92% Codecoverage)
+
+- Code refinement happened not only at the end of the main development lifecycle, but also used frequently during Testing phase.
+- After everything was built and localy tested, a Dockerfile was added for building und running the service in Docker environment.  
 
