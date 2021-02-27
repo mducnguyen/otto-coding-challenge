@@ -89,7 +89,7 @@ For the sorting functionality, I decided to use **Strategy Pattern** and **Abstr
 - Code refinement happened not only at the end of the main development lifecycle, but also used frequently during Testing phase.
 - After everything was built and localy tested, a Dockerfile was added for building und running the service in Docker environment.  
 
-##### 6. Some thoughts
+##### 5. Some thoughts
 
 - As in the Scope of this challenge, the credential is store in a .env file (in this case `dev.env`), which generally should not be exposed and submit to git repository. This is The the real world situation, this files should either be encrypted (with git secret) or the credentials should be store in a Key-Store service, which can only be access while running on server.
 - There is a consideration between empty array and code 200 instead of 204 with no body in case of the queried parent can not be found. This would be convinient for JavaScript frontend clients in the way that they do not have to deal with an extra response code. But for this situation the a response with code 204 an no boby would be acceptable.
