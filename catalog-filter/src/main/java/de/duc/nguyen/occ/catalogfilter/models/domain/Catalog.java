@@ -13,10 +13,10 @@ import java.util.List;
 @Setter
 public class Catalog implements Serializable {
 
-    private List<AbstractNode> navigationEntries = new ArrayList<>();
+    private List<Node> navigationEntries = new ArrayList<>();
 
     public void initParentForNodes() {
-        navigationEntries.forEach(AbstractNode::initParentForChildren);
+        navigationEntries.forEach(Node::initParentForChildren);
     }
 
 }

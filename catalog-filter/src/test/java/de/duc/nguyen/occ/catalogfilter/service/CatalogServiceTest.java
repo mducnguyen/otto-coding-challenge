@@ -2,7 +2,7 @@ package de.duc.nguyen.occ.catalogfilter.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import de.duc.nguyen.occ.catalogfilter.api.CatalogApi;
-import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Node;
 import de.duc.nguyen.occ.catalogfilter.utils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class CatalogServiceTest {
     public void givenTheApiWorkAsExpected_whenGetLinks_thenReturnAListOfLinks() throws JsonProcessingException {
         when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalog());
 
-        List<Link> links = catalogService.getLinks();
+        List<Node> links = catalogService.getLinks();
 
         assertThat(links.isEmpty(), is(false));
         assertThat(links, hasSize(5));
@@ -47,7 +47,7 @@ public class CatalogServiceTest {
         when(catalogApi.getCatalog()).thenReturn(TestUtils.getTestCatalog());
         String parent = "Baby & Kleinkind";
 
-        List<Link> links = catalogService.getLinks(parent);
+        List<Node> links = catalogService.getLinks(parent);
 
         assertThat(links.isEmpty(), is(false));
         assertThat(links, hasSize(3));

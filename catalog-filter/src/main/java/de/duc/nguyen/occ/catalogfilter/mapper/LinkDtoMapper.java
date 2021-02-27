@@ -1,22 +1,21 @@
 package de.duc.nguyen.occ.catalogfilter.mapper;
 
-import de.duc.nguyen.occ.catalogfilter.models.domain.AbstractNode;
-import de.duc.nguyen.occ.catalogfilter.models.domain.Link;
+import de.duc.nguyen.occ.catalogfilter.models.domain.Node;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 
 public class LinkDtoMapper {
-    public static LinkDto toLinkDto(Link link) {
+    public static LinkDto toLinkDto(Node link) {
         LinkDto linkDto = new LinkDto();
         linkDto.setLabel(getLabelOfLink(link));
         linkDto.setUrl(link.getUrl());
         return linkDto;
     }
 
-    private static String getLabelOfLink(Link link) {
+    private static String getLabelOfLink(Node link) {
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(link.getLabel());
 
-        AbstractNode parent = link;
+        Node parent = link;
 
         while (parent.hasParent()) {
             parent = parent.getParent();
