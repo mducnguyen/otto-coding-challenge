@@ -9,9 +9,7 @@
 ### To Run The Service
 
 1. Navigate into folder `catalog-filter` with: `cd ./catalog-filter`
-
 2. Make sure that Docker is running on your machine.
-
 3. To get the Catalog-Filter Service up and running:
 
    - The fastest - the cool way :
@@ -20,9 +18,16 @@
    - The traditional way:
      - run `docker build -t catalog-filter:0.0.1-SNAPSHOT .` to build Docker image.
      - run `docker run --env-file ./dev.env -it -p 80:80 catalog-filter:0.0.1-SNAPSHOT` to start Docker container.
-
 4. The Service is now running on port 80. To test it: use following command:
      `curl 'http://localhost/links?parent=Alter'` 
+
+### Swagger
+
+- The service is also available with a swagger specification file to be used as a doccument or template for generating represent the Service. 
+  - This swagger file can be found at `catalog-filter/src/main/resources/api/catalog-api.yaml`
+  - Or by accessing http://localhost/v2/api-docs when the service is running
+
+- There is also a swagger ui page: http://localhost/swagger-ui.html. Feel free to test the service there.
 
 ### About The Development of this service 
 
@@ -84,9 +89,7 @@ For the sorting functionality, I decided to use **Strategy Pattern** and **Abstr
 - Code refinement happened not only at the end of the main development lifecycle, but also used frequently during Testing phase.
 - After everything was built and localy tested, a Dockerfile was added for building und running the service in Docker environment.  
 
-
-
-##### 5. Some thoughts
+##### 6. Some thoughts
 
 - As in the Scope of this challenge, the credential is store in a .env file (in this case `dev.env`), which generally should not be exposed and submit to git repository. This is The the real world situation, this files should either be encrypted (with git secret) or the credentials should be store in a Key-Store service, which can only be access while running on server.
 - There is a consideration between empty array and code 200 instead of 204 with no body in case of the queried parent can not be found. This would be convinient for JavaScript frontend clients in the way that they do not have to deal with an extra response code. But for this situation the a response with code 204 an no boby would be acceptable.
