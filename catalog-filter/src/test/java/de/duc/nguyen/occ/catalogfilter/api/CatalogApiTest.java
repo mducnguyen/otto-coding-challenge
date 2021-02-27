@@ -43,7 +43,7 @@ public class CatalogApiTest {
         when(catalogApiParam.getApiKey()).thenReturn("apiKey");
         when(catalogApiParam.getUrl()).thenReturn("apiUrl");
         when(restTemplate.exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(Class.class)))
-                .thenReturn(ResponseEntity.of(Optional.of(TestUtils.getTestCatalogJson())));
+                .thenReturn(ResponseEntity.of(Optional.of(TestUtils.getTestCatalog())));
 
         Catalog catalog = catalogApi.getCatalog();
         assertThat(catalog, notNullValue());

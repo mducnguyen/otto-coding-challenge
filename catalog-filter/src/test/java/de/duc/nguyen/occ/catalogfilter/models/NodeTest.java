@@ -48,7 +48,13 @@ public class NodeTest {
 
         section.initParentForChildren();
 
-        List<Node> nodesWithParentNodeA = section.findFirstChildrenToHaveLabel("nodeA");
+
+        List<Node> nodesWithParentSection = section.findFirstToHaveLabel("section");
+
+        assertThat(nodesWithParentSection.size(), is(1));
+        assertThat(nodesWithParentSection.stream().allMatch(node -> node.getLabel().equals("section")), is(true));
+
+        List<Node> nodesWithParentNodeA = section.findFirstToHaveLabel("nodeA");
 
         assertThat(nodesWithParentNodeA.size(), is(2));
         assertThat(nodesWithParentNodeA.stream().allMatch(node -> node.getLabel().equals("nodeA")), is(true));

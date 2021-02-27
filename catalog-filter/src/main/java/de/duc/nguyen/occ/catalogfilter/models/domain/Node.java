@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Getter
 @Setter
@@ -58,15 +57,14 @@ public class Node implements Serializable {
                 .collect(Collectors.toList());
     }
 
-    public List<Node> findFirstChildrenToHaveLabel(String label) {
-        if (hasChildren()) {
-            return children.stream().flatMap(child -> {
-                if (child.getLabel().equalsIgnoreCase(label)) {
-                    return Stream.of(child);
-                } else {
-                    return child.findFirstChildrenToHaveLabel(label).stream();
-                }
-            }).collect(Collectors.toList());
+    public List<Node> findFirstToHaveLabel(String label) {
+
+        if (getLabel().equalsIgnoreCase(label)) {
+            return List.of(this);
+        } else if (hasChildren()) {
+            return children.stream()
+                    .flatMap(child -> child.findFirstToHaveLabel(label).stream())
+                    .collect(Collectors.toList());
         } else {
             return Collections.emptyList();
         }
