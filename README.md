@@ -37,8 +37,8 @@ As I began with the development of this service, there are 3 main design decisio
 
 ​	The Service should consist of 4 main Components. 
 
-- `LinkEndpoint`: is responsible for handling incomming request and delegating the requiredment to other components to process.
-- `CatalogApi`: represents the data accessing layer and is responsible for talking with the external **catalog-api**.
+- `LinkEndpoint`: is responsible for handling incomming request and delegating it to other components to process.
+- `CatalogApi`: represents the data access layer and is responsible for talking with the external **catalog-api**.
 - `CatalogService`: relies on `CatalogApi` for loading data and is responsible for manipulating data to provide results back to `LinkEndpoint` REST-controller.
 - `SortService`: will manage sorting strategies, based on the sorting options as input from client. The suitable strategies will be applied to sort the outgoing responding entities.
 
@@ -52,10 +52,10 @@ Figure 1. Service Architechture
 
 ##### 2. The TreeModel of the Catalog 
 
-As I observed the structure of the JsonObjects comming from the remote **catalog-api**. It was critical to have a dynamic data model for parsing these Objects. Figure 2. show the UML class diagram of the catalog. There are some important bullet points, which considered to be important to this model:
+As I observed the structure of the JsonObjects comming from the remote **catalog-api**, it was critical to have a dynamic data model for parsing these Objects. Figure 2. shows the UML class diagram of the catalog. There are some important bullet points, which considered to be important to this model:
 
 - In order to be able to traverse bidirectional within the model, every node has to be aware of their parent node and also their children nodes. 
-- Every element of the Catalog can be a node. A leaf can be a node itself but without children.
+- Every element of the Catalog can be a node. A leaf can be a node itself but without any children.
 - Each node has to be able to decide whether it is the last of its kind (a leaf).
 
 
@@ -68,11 +68,11 @@ Figure 2. Catalog Datamodel
 
 ##### 3. The sorting Strategy
 
-For the sorting functionality, I decided to use **Strategy Pattern** and **Abstract Factory Pattern** to increase the flexiblity and the ability for future extensions. Each sorting decision ist captured in `SortStrategy` object, which provides the appropriate comparing functions for its own situation. More future sorting strategy can be easily added by expanding `SortStrategy` class and provide a new `SortStrategyFactory` to generate the new strategy.
+For the sorting functionality, I decided to use **Strategy Pattern** and **Abstract Factory Pattern** to increase the flexiblity and the ability for future extensions. Each sorting decision is captured in `SortStrategy` object, which provides the appropriate comparing functions for its own configuration (field and direction). More future sorting strategies can be easily added by expanding `SortStrategy` class and provide a new `SortStrategyFactory` to generate the new strategy.
 
-- For Sorting a list of LinkDtos, `SortService` uses `SortPropertiesParser` to parse `SortProperties` from sortOption string from user, which specifies which field should be sorted and which direction (asc, desc). 
-- With `SortProperties` `SortStrategyFactory` will be able to generate sorting strategies (in our case `UrlSortStrategy` and `LabelSortStrategy`) for `SortingService` to apply for the unsorted list.
-- Each `SortStrategy` has a `chain()` methodes, which combines the incomming `ComarisonChain` with the appropriate comparing specs for its type of strategy. The order of the sorting strategies will affects how the list is sorted. 
+- For sorting a list of LinkDtos, `SortService` uses `SortPropertiesParser` to parse `SortProperties` from `sortOption` string, which specifies which field should be sorted and which direction (asc, desc). 
+- With `SortProperties`, `SortStrategyFactory` will be able to generate sorting strategies (in our case `UrlSortStrategy` and `LabelSortStrategy`) for `SortingService` to apply for the unsorted list.
+- Each `SortStrategy` has a `chain()` method, which combines the incomming `ComarisonChain` with the appropriate comparing specs for its type of strategy. The order of the sorting strategies will affects how the list is sorted. 
 
 
 
