@@ -1,10 +1,10 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
 import com.google.common.collect.ComparisonChain;
+import de.duc.nguyen.occ.catalogfilter.models.sort.SortInvalidPropertyException;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
-import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
-import lombok.AllArgsConstructor;
+import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class SortServiceImpl implements SortService {
     private final SortPropertiesParser sortPropertiesParser;
 
     @Override
-    public void sort(List<LinkDto> linkDTOS, String sortOption) {
+    public void sort(List<LinkDto> linkDTOS, String sortOption) throws SortInvalidPropertyException {
         SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
         sort(linkDTOS, sortProperties);
     }

@@ -12,12 +12,12 @@ public enum SortDirection {
         this.value = label;
     }
 
-    public static SortDirection fromString(String text) {
+    public static SortDirection fromString(String text) throws SortInvalidPropertyException {
         for (SortDirection field : SortDirection.values()) {
             if (field.value.equals(text)) {
                 return field;
             }
         }
-        return DEFAULT;
+        throw new SortDirectionInvalidException("Sorting for direction '"+ text +"' is not suppported");
     }
 }

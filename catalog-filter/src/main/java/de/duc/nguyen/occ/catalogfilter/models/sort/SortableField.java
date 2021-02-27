@@ -12,12 +12,12 @@ public enum SortableField {
         this.value = label;
     }
 
-    public static SortableField fromString(String text) {
+    public static SortableField fromString(String text) throws SortInvalidPropertyException {
         for (SortableField field : SortableField.values()) {
             if (field.value.equals(text)) {
                 return field;
             }
         }
-        return DEFAULT;
+        throw new SortFieldInvalidException("Sorting on field '" + text + "' is not supported");
     }
 }

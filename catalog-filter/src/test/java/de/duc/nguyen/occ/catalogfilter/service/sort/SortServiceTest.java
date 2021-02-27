@@ -1,9 +1,6 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
-import de.duc.nguyen.occ.catalogfilter.models.sort.SortDirection;
-import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
-import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperty;
-import de.duc.nguyen.occ.catalogfilter.models.sort.SortableField;
+import de.duc.nguyen.occ.catalogfilter.models.sort.*;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.LabelStrategy;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
@@ -38,7 +35,7 @@ public class SortServiceTest {
     }
 
     @Test
-    public void whenSort_thenExpectSorted() {
+    public void whenSort_thenExpectSorted() throws SortInvalidPropertyException {
         // given
         LinkDto link1 = new LinkDto();
         link1.setLabel("abc");

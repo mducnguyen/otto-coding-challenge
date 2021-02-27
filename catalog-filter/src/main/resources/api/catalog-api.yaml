@@ -18,12 +18,12 @@ paths:
       parameters:
         - name: parent
           in: query
-          description: Filter Parent
+          description: Filter Parent (ex. "Alter")
           required: false
           type: string
         - name: sort
           in: query
-          description: Sort options (sprecified in OpenStack)
+          description: Sort options (sprecified in OpenStack) (ex. "label:asc,url:desc")
           required: false
           type: string
       produces:
@@ -35,11 +35,16 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Link'
-              example: "hydraulic_servicing"
         '204':
           description: no result found
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
         '424':
           description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ExceptionResponse'
 
 
 definitions: # Object definition
@@ -58,3 +63,22 @@ definitions: # Object definition
       - label
       - url
 
+  ExceptionResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Error Discription
+        example: 'Bad Request'
+      code:
+        type: string
+        description: Http Error Code
+        example: '400'
+      message:
+        type: string
+        description: Error Message
+        example: 'Error Message '
+    required:
+      - error
+      - code
+      - message

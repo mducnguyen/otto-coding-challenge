@@ -29,6 +29,7 @@ public class SwaggerConfiguration {
     public Docket insightApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
+                .directModelSubstitute(Void.class, void.class)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("de.duc.nguyen.occ.catalogfilter.rest"))
                 .paths(PathSelectors.any())

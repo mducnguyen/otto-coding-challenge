@@ -1,5 +1,6 @@
 package de.duc.nguyen.occ.catalogfilter.service.sort;
 
+import de.duc.nguyen.occ.catalogfilter.models.sort.SortInvalidPropertyException;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 
 public interface SortPropertiesParser {
@@ -9,5 +10,5 @@ public interface SortPropertiesParser {
      * @param sortOptions Sort Options
      * @return {@link SortProperties}
      */
-    SortProperties parseSortProperties(String sortOptions);
+    SortProperties parseSortProperties(String sortOptions) throws SortInvalidPropertyException;
 }

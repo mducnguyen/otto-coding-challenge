@@ -3,9 +3,12 @@ package de.duc.nguyen.occ.catalogfilter.rest;
 import de.duc.nguyen.occ.catalogfilter.mapper.LinkDtoMapper;
 import de.duc.nguyen.occ.catalogfilter.models.domain.Node;
 import de.duc.nguyen.occ.catalogfilter.rest.api.LinksApi;
+import de.duc.nguyen.occ.catalogfilter.rest.model.ExceptionResponseDto;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import de.duc.nguyen.occ.catalogfilter.service.CatalogService;
 import de.duc.nguyen.occ.catalogfilter.service.sort.SortService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +28,7 @@ public class LinksEndpoint implements LinksApi {
 
     @SneakyThrows
     public ResponseEntity<List<LinkDto>> getLinks(@RequestParam(name = "parent", required = false) String parent,
-                                                  @RequestParam(name = "sort", required = false, defaultValue = "label:acs") String sort)  {
+                                                  @RequestParam(name = "sort", required = false) String sort)  {
 
         List<Node> links = catalogService.getLinks();
 
