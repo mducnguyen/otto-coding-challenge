@@ -1,8 +1,7 @@
 package de.duc.nguyen.occ.catalogfilter.models.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -12,10 +11,14 @@ import java.util.stream.Stream;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Node implements Serializable {
     private String label;
     private String url;
+    private String type;
     private Node parent;
     private List<Node> children;
 
@@ -32,7 +35,7 @@ public class Node implements Serializable {
     }
 
     public void initParentForChildren() {
-        if (children != null)
+        if (hasChildren())
             this.children.forEach(children -> {
                 children.setParent(this);
                 children.initParentForChildren();

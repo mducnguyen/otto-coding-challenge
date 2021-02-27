@@ -26,7 +26,7 @@ public class SortPropertiesParser {
         List<SortProperty> sortProperties = options.stream()
                 .filter(Objects::nonNull)
                 .map(option -> {
-                    String[] property = option.split(":");
+                    String[] property = option.trim().split(":");
                     if (property.length > 1) {
                         return SortProperty.builder()
                                 .sortableField(SortableField.fromString(property[0]))

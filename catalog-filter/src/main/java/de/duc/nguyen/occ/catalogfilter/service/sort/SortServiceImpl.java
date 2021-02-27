@@ -25,7 +25,6 @@ public class SortServiceImpl implements SortService {
     private void sort(List<LinkDto> linkDTOS, SortProperties sortProperties) {
         List<SortStrategy> sortStrategies = sortStrategyFactory.getSortStrategies(sortProperties);
 
-
         linkDTOS.sort((link1, link2) -> {
 
             ComparisonChain comparisonChain = ComparisonChain.start();
