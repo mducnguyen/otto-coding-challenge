@@ -2,6 +2,8 @@ package de.duc.nguyen.occ.catalogfilter.service.sort;
 
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortDirection;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
+import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperty;
+import de.duc.nguyen.occ.catalogfilter.models.sort.SortableField;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.LabelStrategy;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
@@ -25,16 +27,19 @@ public class SortServiceTest {
     @Mock
     SortStrategyFactory sortStrategyFactory;
 
+    @Mock
+    SortPropertiesParser sortPropertiesParser;
+
     SortService sortService;
 
     @Before
     public void setUp() {
-        sortService = new SortServiceImpl(sortStrategyFactory);
+        sortService = new SortServiceImpl(sortStrategyFactory, sortPropertiesParser);
     }
 
     @Test
     public void whenSort_thenExpectSorted() {
-
+        // given
         LinkDto link1 = new LinkDto();
         link1.setLabel("abc");
         link1.setUrl("123");
@@ -49,12 +54,25 @@ public class SortServiceTest {
 
         List<LinkDto> links = new ArrayList<>(List.of(link1, link2, link3));
 
+        String sortOption = "label:desc";
+
+        SortProperties sortProperties = SortProperties.builder()
+                .sortProperties(List.of(SortProperty.builder()
+                        .sortableField(SortableField.LABEL)
+                        .sortDirection(SortDirection.DESC)
+                        .build()))
+                .build();
+
         SortStrategy sortStrategy = new LabelStrategy(SortDirection.DESC);
 
         when(sortStrategyFactory.getSortStrategies(any(SortProperties.class))).thenReturn(List.of(sortStrategy));
 
-        sortService.sort(links, "label:desc");
+        when(sortPropertiesParser.parseSortProperties(sortOption)).thenReturn(sortProperties);
 
+        // when
+        sortService.sort(links, sortOption);
+
+        // then
         assertTrue(TestUtils.istSortedLabelDesc(links));
 
 

@@ -3,12 +3,20 @@ package de.duc.nguyen.occ.catalogfilter.service.sort;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortDirection;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import de.duc.nguyen.occ.catalogfilter.models.sort.SortableField;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-public class SortPropertiesParserTest {
+public class SortPropertiesParserImplTest {
+
+    SortPropertiesParser sortPropertiesParser;
+
+
+    @Before
+    public void setUp() {
+        sortPropertiesParser = new SortPropertiesParserImpl();
+    }
 
     @Test
     public void givenSingleOption_whenParseSortProperties_thenReturnSortPropertiesWithOneProperty() {
@@ -16,7 +24,7 @@ public class SortPropertiesParserTest {
         String sortOption = "label";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 1);
@@ -31,7 +39,7 @@ public class SortPropertiesParserTest {
         String sortOption = "label:desc";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 1);
@@ -45,7 +53,7 @@ public class SortPropertiesParserTest {
         String sortOption = "label:desc,url:asc";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 2);
@@ -61,7 +69,7 @@ public class SortPropertiesParserTest {
         String sortOption = "";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 0);
@@ -73,7 +81,7 @@ public class SortPropertiesParserTest {
         String sortOption = ":";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 1);
@@ -85,14 +93,13 @@ public class SortPropertiesParserTest {
         String sortOption = "name";
 
         // when
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
 
         // then
         assertEquals(sortProperties.getSortProperties().size(), 1);
         assertEquals(sortProperties.getSortProperties().get(0).getSortableField(), SortableField.DEFAULT);
         assertEquals(sortProperties.getSortProperties().get(0).getSortDirection(), SortDirection.DEFAULT);
     }
-
 
 
 }

@@ -5,19 +5,22 @@ import de.duc.nguyen.occ.catalogfilter.models.sort.SortProperties;
 import de.duc.nguyen.occ.catalogfilter.rest.model.LinkDto;
 import de.duc.nguyen.occ.catalogfilter.models.sort.strategy.SortStrategy;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SortServiceImpl implements SortService {
 
     private final SortStrategyFactory sortStrategyFactory;
 
+    private final SortPropertiesParser sortPropertiesParser;
+
     @Override
     public void sort(List<LinkDto> linkDTOS, String sortOption) {
-        SortProperties sortProperties = SortPropertiesParser.parseSortProperties(sortOption);
+        SortProperties sortProperties = sortPropertiesParser.parseSortProperties(sortOption);
         sort(linkDTOS, sortProperties);
     }
 
