@@ -21,7 +21,8 @@
      - run `docker build -t catalog-filter:0.0.1-SNAPSHOT .` to build Docker image.
      - run `docker run --env-file ./dev.env -it -p 80:80 catalog-filter:0.0.1-SNAPSHOT` to start Docker container.
 
-
+4. The Service is now running on port 80. To test it: use following command:
+     `curl 'http://localhost/links?parent=Alter'` 
 
 ### About The Development of this service 
 
